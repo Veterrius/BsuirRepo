@@ -1,2 +1,2 @@
 # BsuirRepo
-A repository for my projects while I'm studying in Belorussian State University of Informatics and Radioelectronics
+Lasciate ogni speranza, voi ch'entrate
