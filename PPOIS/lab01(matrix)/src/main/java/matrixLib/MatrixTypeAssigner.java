@@ -53,7 +53,7 @@ class MatrixTypeAssigner {
                     return type;
                 default:
                     type = MatrixType.DIAGONAL;
-                    break;
+                    return type;
             }
         }
         return type;

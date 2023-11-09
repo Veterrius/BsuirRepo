@@ -37,7 +37,7 @@ public class MatrixTest {
 
     @Test
     public void extractSubmatrixTest_NOT_NULL() throws MatrixException {
-        Matrix subNotNull = testMatrix2.extractSubmatrix(0,0);
+        Matrix subNotNull = testMatrix2.extractSubmatrix(1,1);
         assertNotNull(subNotNull);
     }
 

@@ -17,7 +17,7 @@ public class MatrixTypeAssigningTest {
     @BeforeAll
     static void setUp() {
         unitMatrix = new Matrix(new double[][]{{1,0,0},{0,1,0},{0,0,1}},3,3);
-        diagonalMatrix = new Matrix(new double[][]{{2,0,0},{0,1,0},{0,0,1}},3,3);
+        diagonalMatrix = new Matrix(new double[][]{{2,0,0},{0,1,0},{0,0,6}},3,3);
         untypedMatrix = new Matrix(new double[][]{{2,0},{1,0},{0,1}},3,2);
         symmetricMatrix = new Matrix(new double[][]{{2,3,6},{3,4,5},{6,5,9}},3,3);
         upperTriangularMatrix = new Matrix(new double[][]{{2,2,2},{0,1,1},{0,0,1}},3,3);
@@ -47,6 +47,7 @@ public class MatrixTypeAssigningTest {
         symmetricMatrix.assignType();
         MatrixType expectedType = MatrixType.SYMMETRIC;
         MatrixType actualType = symmetricMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -54,6 +55,7 @@ public class MatrixTypeAssigningTest {
         untypedMatrix.assignType();
         MatrixType expectedType = MatrixType.UNTYPED;
         MatrixType actualType = untypedMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -61,6 +63,7 @@ public class MatrixTypeAssigningTest {
         lowerTriangularMatrix.assignType();
         MatrixType expectedType = MatrixType.LOWER_TRIANGULAR;
         MatrixType actualType = lowerTriangularMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -68,6 +71,7 @@ public class MatrixTypeAssigningTest {
         upperTriangularMatrix.assignType();
         MatrixType expectedType = MatrixType.UPPER_TRIANGULAR;
         MatrixType actualType = upperTriangularMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -75,6 +79,7 @@ public class MatrixTypeAssigningTest {
         diagonalMatrix.assignType();
         MatrixType expectedType = MatrixType.DIAGONAL;
         MatrixType actualType = diagonalMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -82,5 +87,6 @@ public class MatrixTypeAssigningTest {
         unitMatrix.assignType();
         MatrixType expectedType = MatrixType.UNIT;
         MatrixType actualType = unitMatrix.getType();
+        assertEquals(expectedType, actualType);
     }
 }
