@@ -1,0 +1,18 @@
+2023-11-22T20:51:13.812+03:00  INFO 14304 --- [main] b.dlstudio.hospital.HospitalApplication  : Starting HospitalApplication using Java 21.0.1 with PID 14304 (D:\Uni\PPOIS\hospital\target\classes started by User in D:\Uni\PPOIS\hospital)
+2023-11-22T20:51:13.819+03:00  INFO 14304 --- [main] b.dlstudio.hospital.HospitalApplication  : No active profile set, falling back to 1 default profile: "default"
+2023-11-22T20:51:14.453+03:00  INFO 14304 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-22T20:51:14.564+03:00  INFO 14304 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 100 ms. Found 5 JPA repository interfaces.
+2023-11-22T20:51:15.089+03:00  INFO 14304 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22T20:51:15.165+03:00  INFO 14304 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-11-22T20:51:15.168+03:00  INFO 14304 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-11-22T20:51:15.574+03:00  INFO 14304 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-11-22T20:51:15.616+03:00  INFO 14304 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22T20:51:16.372+03:00  INFO 14304 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2fe2965c
+2023-11-22T20:51:16.375+03:00  INFO 14304 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22T20:51:17.999+03:00  INFO 14304 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-11-22T20:51:18.189+03:00  INFO 14304 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22T20:51:18.964+03:00  INFO 14304 --- [main] b.dlstudio.hospital.HospitalApplication  : Started HospitalApplication in 5.785 seconds (process running for 6.815)
+2023-11-22T20:51:19.337+03:00  INFO 14304 --- [main] b.dlstudio.hospital.HospitalApplication  : APPLICATION FINISHED
+2023-11-22T20:51:19.342+03:00  INFO 14304 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22T20:51:19.345+03:00  INFO 14304 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22T20:51:19.357+03:00  INFO 14304 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
