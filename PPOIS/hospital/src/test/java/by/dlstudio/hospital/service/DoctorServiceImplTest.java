@@ -9,6 +9,7 @@ import by.dlstudio.hospital.domain.enums.Qualification;
 import by.dlstudio.hospital.domain.repository.DoctorRepository;
 import by.dlstudio.hospital.domain.repository.PatientRepository;
 import by.dlstudio.hospital.service.exception.HospitalDatabaseException;
+import by.dlstudio.hospital.service.exception.VerificationException;
 import by.dlstudio.hospital.service.impl.DoctorServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -52,7 +53,7 @@ public class DoctorServiceImplTest {
         doctor.setQualification(Qualification.TEST);
 
         doctor = doctorRepository.save(doctor);
-        assertEquals(doctor, doctorService.findDoctorByPhoneNumber(doctor.getPhoneNumber()).orElseThrow());
+        assertEquals(doctor, doctorService.findDoctorByPhoneNumber(doctor.getContactInfo()).orElseThrow());
     }
 
     @Test
@@ -72,6 +73,27 @@ public class DoctorServiceImplTest {
         doctor = doctorService.createOrUpdateDoctor(doctor);
 
         assertEquals("changed", doctor.getSurname());
+    }
+
+    @Test
+    void createOrUpdateValidDoctorTest_Success() {
+        Doctor validDoctor = new Doctor("testX","testX","+375 (29) 555-0125");
+        validDoctor.setQualification(Qualification.TEST);
+
+        try {
+            validDoctor = doctorService.createOrUpdateValidDoctor(validDoctor);
+            assertNotNull(validDoctor.getId());
+        } catch (VerificationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void createOrUpdateValidDoctorTest_VerificationException_WrongFormat() {
+        Doctor invalidDoctor = new Doctor("testX","testX","abcdef");
+        invalidDoctor.setQualification(Qualification.TEST);
+
+        assertThrows(VerificationException.class,()->doctorService.createOrUpdateValidDoctor(invalidDoctor));
     }
 
     @Nested
@@ -99,7 +121,7 @@ public class DoctorServiceImplTest {
 
         @Test
         void checkDoctorAvailabilityTest_DoctorAvailable() {
-            Doctor doctor = doctorRepository.findDoctorByPhoneNumber("test3").orElseThrow();
+            Doctor doctor = doctorRepository.findDoctorByContactInfo("test3").orElseThrow();
             try {
                 assertTrue(doctorService.checkDoctorAvailability(doctor, 99L));
             } catch (HospitalDatabaseException e) {
@@ -109,7 +131,7 @@ public class DoctorServiceImplTest {
 
         @Test
         void checkDoctorAvailabilityTest_DoctorNotAvailable() {
-            Doctor doctor = doctorRepository.findDoctorByPhoneNumber("test3").orElseThrow();
+            Doctor doctor = doctorRepository.findDoctorByContactInfo("test3").orElseThrow();
             doctor.setPatient(patientRepository.findPatientById(99L).orElseThrow());
             try {
                 assertFalse(doctorService.checkDoctorAvailability(doctor, 99L));
@@ -120,7 +142,7 @@ public class DoctorServiceImplTest {
 
         @Test
         void checkDoctorAvailabilityTest_HospitalDatabaseException_PatientNotFound() {
-            Doctor doctor = doctorRepository.findDoctorByPhoneNumber("test3").orElseThrow();
+            Doctor doctor = doctorRepository.findDoctorByContactInfo("test3").orElseThrow();
             assertThrows(HospitalDatabaseException.class, ()->
                     doctorService.checkDoctorAvailability(doctor,100L));
         }
@@ -143,7 +165,7 @@ public class DoctorServiceImplTest {
         doctorService.deleteDoctor(doctor);
         Mockito.verify(patientRepository).save(freePatient);
 
-        assertTrue(doctorRepository.findDoctorByPhoneNumber("test4").isEmpty());
+        assertTrue(doctorRepository.findDoctorByContactInfo("test4").isEmpty());
     }
 
     @Test
@@ -156,7 +178,7 @@ public class DoctorServiceImplTest {
         } catch (HospitalDatabaseException e) {
             throw new RuntimeException(e);
         }
-        assertTrue(doctorRepository.findDoctorByPhoneNumber("test5").isEmpty());
+        assertTrue(doctorRepository.findDoctorByContactInfo("test5").isEmpty());
     }
 
     @Test

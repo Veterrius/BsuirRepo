@@ -7,6 +7,7 @@ import by.dlstudio.hospital.domain.repository.PatientRepository;
 import by.dlstudio.hospital.service.DoctorService;
 import by.dlstudio.hospital.service.PatientService;
 import by.dlstudio.hospital.service.exception.HospitalDatabaseException;
+import by.dlstudio.hospital.service.exception.VerificationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Optional<Patient> findPatientByPhoneNumber(String phoneNumber) {
-        return patientRepository.findPatientByPhoneNumber(phoneNumber);
+        return patientRepository.findPatientByContactInfo(phoneNumber);
     }
 
     @Override
@@ -45,6 +46,19 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient registerOrUpdatePatient(Patient patient) {
         return patientRepository.save(patient);
+    }
+
+    @Override
+    public Patient registerOrUpdateValidPatient(Patient patient) throws VerificationException {
+        if (patientIsValid(patient)) {
+            return registerOrUpdatePatient(patient);
+        } else throw new VerificationException("Patient's contact info should be address" +
+                " with format: \"[house number] [street], [city], [country]\"");
+    }
+
+    @Override
+    public boolean patientIsValid(Patient patient) {
+        return patient.verifyContactInfo(patient.getContactInfo());
     }
 
     @Override

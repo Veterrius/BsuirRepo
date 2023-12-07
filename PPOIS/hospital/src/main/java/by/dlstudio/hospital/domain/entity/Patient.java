@@ -1,6 +1,7 @@
 package by.dlstudio.hospital.domain.entity;
 
 import by.dlstudio.hospital.domain.abstr.Person;
+import by.dlstudio.hospital.domain.util.ContactInfoVerifier;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -15,8 +16,8 @@ public class Patient extends Person {
     public Patient() {
     }
 
-    public Patient(String name, String surname, String phoneNumber) {
-        super(name, surname, phoneNumber);
+    public Patient(String name, String surname, String address) {
+        super(name, surname, address);
     }
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "patients")
@@ -54,12 +55,17 @@ public class Patient extends Person {
     }
 
     @Override
+    public boolean verifyContactInfo(String address) {
+        return ContactInfoVerifier.verifyAddress(address);
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", Patient.class.getSimpleName() + "[", "]")
                 .add("id=" + getId())
                 .add("name='" + getName() + "'")
                 .add("surname='" + getSurname() + "'")
-                .add("phoneNumber='" + getPhoneNumber() + "'")
+                .add("address='" + getContactInfo() + "'")
                 .add("diseases=" + diseases)
                 .add("doctor=" + doctor)
                 .toString();
@@ -70,13 +76,13 @@ public class Patient extends Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return getId().equals(patient.getId()) && getPhoneNumber().equals(patient.getPhoneNumber())
+        return getId().equals(patient.getId()) && getContactInfo().equals(patient.getContactInfo())
                 && diseases.stream().allMatch(d -> patient.getDiseases().stream()
                 .anyMatch(d1 -> d1.getId().equals(d.getId())));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(),getPhoneNumber(),getName());
+        return Objects.hash(getId(),getContactInfo(),getName());
     }
 }

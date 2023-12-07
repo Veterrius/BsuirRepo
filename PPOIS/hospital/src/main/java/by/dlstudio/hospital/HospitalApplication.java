@@ -38,7 +38,6 @@ public class HospitalApplication {
 								  DoctorService doctorService, DepartmentService departmentService,
 								  DiseaseService diseaseService) {
 		return args -> {
-
         };
 	}
 }

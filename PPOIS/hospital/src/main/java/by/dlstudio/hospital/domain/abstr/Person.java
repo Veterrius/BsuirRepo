@@ -10,10 +10,10 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(String name, String surname, String phoneNumber) {
+    public Person(String name, String surname, String contactInfo) {
         this.name = name;
         this.surname = surname;
-        this.phoneNumber = phoneNumber;
+        this.contactInfo = contactInfo;
     }
 
     @Id
@@ -26,8 +26,8 @@ public abstract class Person {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "phone_number", unique = true)
-    private String phoneNumber;
+    @Column(name = "contact_info", unique = true)
+    private String contactInfo;
 
     public Long getId() {
         return id;
@@ -53,13 +53,15 @@ public abstract class Person {
         this.surname = surname;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getContactInfo() {
+        return contactInfo;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
+
+    protected abstract boolean verifyContactInfo(String contactInfo);
 
     @Override
     public String toString() {
@@ -67,7 +69,7 @@ public abstract class Person {
                 .add("id=" + id)
                 .add("name='" + name + "'")
                 .add("surname='" + surname + "'")
-                .add("phoneNumber='" + phoneNumber + "'")
+                .add("contactInfo='" + contactInfo + "'")
                 .toString();
     }
 }

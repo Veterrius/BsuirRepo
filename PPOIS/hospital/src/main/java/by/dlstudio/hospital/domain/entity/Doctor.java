@@ -2,6 +2,7 @@ package by.dlstudio.hospital.domain.entity;
 
 import by.dlstudio.hospital.domain.abstr.Person;
 import by.dlstudio.hospital.domain.enums.Qualification;
+import by.dlstudio.hospital.domain.util.ContactInfoVerifier;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -56,12 +57,17 @@ public class Doctor extends Person {
     }
 
     @Override
+    public boolean verifyContactInfo(String phoneNumber) {
+        return ContactInfoVerifier.verifyPhoneNumber(phoneNumber);
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", Doctor.class.getSimpleName() + "[", "]")
                 .add("id=" + getId())
                 .add("name='" + getName() + "'")
                 .add("surname='" + getSurname() + "'")
-                .add("phoneNumber='" + getPhoneNumber() + "'")
+                .add("phoneNumber='" + getContactInfo() + "'")
                 .add("qualification=" + qualification)
                 .toString();
     }
@@ -71,7 +77,7 @@ public class Doctor extends Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
-        return getId().equals(doctor.getId()) && getPhoneNumber().equals(doctor.getPhoneNumber())
+        return getId().equals(doctor.getId()) && getContactInfo().equals(doctor.getContactInfo())
                 && qualification.equals(doctor.getQualification());
     }
 

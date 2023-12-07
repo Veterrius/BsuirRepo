@@ -10,6 +10,7 @@ import by.dlstudio.hospital.domain.repository.DiseaseRepository;
 import by.dlstudio.hospital.domain.repository.HospitalRoomRepository;
 import by.dlstudio.hospital.domain.repository.PatientRepository;
 import by.dlstudio.hospital.service.exception.HospitalDatabaseException;
+import by.dlstudio.hospital.service.exception.VerificationException;
 import by.dlstudio.hospital.service.impl.PatientServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,7 +48,7 @@ public class PatientServiceImplTest {
     void findPatientByPhoneNumberTest_Success() {
         Patient patient = new Patient("test1", "test1", "test1");
         patient = patientRepository.save(patient);
-        assertEquals(patient, patientService.findPatientByPhoneNumber(patient.getPhoneNumber()).orElseThrow());
+        assertEquals(patient, patientService.findPatientByPhoneNumber(patient.getContactInfo()).orElseThrow());
     }
 
     @Test
@@ -64,13 +65,30 @@ public class PatientServiceImplTest {
     }
 
     @Test
+    void registerOrUpdateValidPatientTest_Success() {
+        Patient validPatient = new Patient("testX","testX","45 Noba, Grodno, Belarus");
+        try {
+            validPatient = patientService.registerOrUpdateValidPatient(validPatient);
+            assertNotNull(validPatient.getId());
+        } catch (VerificationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void registerOrUpdateValidPatientTest_VerificationException_WrongFormat() {
+        Patient invalidPatient = new Patient("testX","testX","asdffd");
+        assertThrows(VerificationException.class,()->patientService.registerOrUpdateValidPatient(invalidPatient));
+    }
+
+    @Test
     void deletePatientTest_Success() {
         Patient patient = new Patient("test3","test3","test3");
         patient = patientRepository.save(patient);
 
         patientService.deletePatient(patient);
 
-        assertTrue(patientRepository.findPatientByPhoneNumber("test3").isEmpty());
+        assertTrue(patientRepository.findPatientByContactInfo("test3").isEmpty());
     }
 
     @Test
@@ -83,7 +101,7 @@ public class PatientServiceImplTest {
         } catch (HospitalDatabaseException e) {
             throw new RuntimeException(e);
         }
-        assertTrue(patientRepository.findPatientByPhoneNumber("test4").isEmpty());
+        assertTrue(patientRepository.findPatientByContactInfo("test4").isEmpty());
     }
 
     @Test

@@ -126,17 +126,6 @@ public class HospitalRoomServiceImplTest {
                 () -> hospitalRoomService.createRoomInDepartment(new HospitalRoom(), 99L));
     }
 
-//    @Override
-//    public Patient assignPatientToRoom(HospitalRoom roomFromDb, Long patientId) throws HospitalDatabaseException, HospitalRoomException {
-//        Patient patientFromDb = patientRepository.findPatientById(patientId)
-//                .orElseThrow(()->new HospitalDatabaseException("Patient not found"));
-//        if (!checkRoomAvailability(roomFromDb)) throw new HospitalRoomException("No free slots left");
-//        roomFromDb.getPatients().add(patientFromDb);
-//        patientFromDb.setHospitalRoom(roomFromDb);
-//        hospitalRoomRepository.save(roomFromDb);
-//        return patientRepository.save(patientFromDb);
-//    }
-
     @Test
     public void checkRoomAvailabilityTest_Success() {
         HospitalRoom hospitalRoom = new HospitalRoom();
